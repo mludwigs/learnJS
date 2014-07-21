@@ -1,41 +1,45 @@
 function Human() {
 
+  this.legs = 2;
+
 }
 
-Human.prototype = {
-  legs: 2,
+// Solider Class
+function Soldier(name) {
+  this.name = name;
+  this.type = "soldier"
+}
 
-  talk: function() {
-    console.log("Hello, world")
+Soldier.prototype = new Human();
+
+Soldier.prototype = {
+  gun: '',
+
+  shoot: function () {
+   if (this.type === "soldier") {
+     console.log('bang');
+   } else if (this.type === "gunner") {
+     console.log('Rapid fire bang bang');
+   } else {
+     console.log(this.type);
+   }
   }
+};
+
+// Gunner Class
+function Gunner(name) {
+  this.type = "gunner";
 }
 
-function Soldier(weapon) {
-  this.weapon = weapon
-}
+Gunner.prototype = new Soldier();
 
-Soldier.prototype =  new Human();
+Gunner.prototype = {
+  gun: 'Machine Gun'
+};
 
-Soldier.prototype.guns = {
-  rile: ['M16', 'M4'],
-  pistol: ['M9', 'M1911'],
-  machine_gun: ['M249', 'RPK']
-}
+var soldier = new Soldier('matt');
+var gunner = new Gunner('bill');
 
-Soldier.prototype.speed = function() {
-  var speed = 100;
+soldier.shoot();
+console.log(gunner.name);
 
-  if (this.weapon === 'rile') {
-    speed -= 10;
-    return speed;
-  } else if (this.weapon === 'machine gun') {
-    speed -= 25;
-    return speed;
-  }
-}
-
-
-
-var soldier = new Soldier('rile');
-
-console.log(soldier.speed());
