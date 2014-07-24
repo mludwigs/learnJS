@@ -62,7 +62,7 @@ Shotgun.prototype = {
 /* Doing things!
 ======================= */
 
-var nameChar = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t'];
+var nameChar = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t', 'u', 'v','w', 'x', 'y', 'z'];
 
 function ClassBuilder(array) {
   this.nameBuilder = array;
@@ -94,7 +94,7 @@ ClassBuilder.prototype = {
       clas.push(new classes[Math.floor(classes.length * Math.random())](this.randomName()));
       for (j = 0; j < clas.length; j++) {
         if (clas[j] instanceof Rifleman) {
-          obj.push('Rileman');
+          obj.push('Rifleman');
         } else if (clas[j] instanceof Gunner) {
           obj.push('Gunner');
         } else if (clas[j] instanceof Shotgun) {
@@ -106,9 +106,41 @@ ClassBuilder.prototype = {
     }
 
     return obj;
+  },
+
+  objBuild: function () {
+    var soldiers = {},
+        obj = this.randomClass(),
+        name,
+        i;
+
+    for (i = 0; i < obj.length; i++) {
+      name = this.randomName();
+      soldiers[name] = obj[i];
+    }
+
+    return soldiers;
+  },
+
+  arrayBuild: function () {
+    var soldiers = [],
+        obj = this.randomClass(),
+        name,
+        i;
+
+    for (i = 0; i < obj.length; i++) {
+      name = this.randomName();
+      soldiers.push([name, obj[i]]);
+    }
+
+    return soldiers;
   }
 
 };
 
 var classs = new ClassBuilder(nameChar);
-console.log(classs.randomClass());
+
+// Used for the random array
+console.log(classs.arrayBuild());
+// Used for the random object with key value pairs
+console.log(classs.objBuild());
