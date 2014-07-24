@@ -15,14 +15,6 @@ Soldier.prototype = {
   }
 };
 
-// Soldier.prototype = new Human();
-
-//Soldier.prototype.gun = 'M4';
-//
-//Soldier.prototype.shoot = function () {
-//  console.log('Bang Bang');
-//};
-
 // Gunner class
 function Gunner(name) {
   Soldier.call(this, name);
@@ -72,10 +64,11 @@ ClassBuilder.prototype = {
 
   randomName: function () {
     var nameLetters = [],
+        number = Math.floor(Math.random() * 10) + 3,
         name,
         i;
 
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < number; i++) {
       nameLetters.push(this.nameBuilder[Math.floor(this.nameBuilder.length * Math.random())]);
       name = nameLetters.join('');
     }
@@ -92,20 +85,9 @@ ClassBuilder.prototype = {
 
     for (i = 0; i < 50; i++) {
       clas.push(new classes[Math.floor(classes.length * Math.random())](this.randomName()));
-      for (j = 0; j < clas.length; j++) {
-        if (clas[j] instanceof Rifleman) {
-          obj.push('Rifleman');
-        } else if (clas[j] instanceof Gunner) {
-          obj.push('Gunner');
-        } else if (clas[j] instanceof Shotgun) {
-          obj.push('Shotgun')
-        } else {
-          throw new Error('Invalid type: needs to be object');
-        }
-      }
     }
 
-    return obj;
+    return clas;
   },
 
   objBuild: function () {
@@ -116,7 +98,7 @@ ClassBuilder.prototype = {
 
     for (i = 0; i < obj.length; i++) {
       name = this.randomName();
-      soldiers[name] = obj[i];
+      soldiers[obj.name] = obj[i];
     }
 
     return soldiers;
@@ -124,13 +106,11 @@ ClassBuilder.prototype = {
 
   arrayBuild: function () {
     var soldiers = [],
-        obj = this.randomClass(),
-        name,
+        arrRanClass = this.randomClass(),
         i;
 
-    for (i = 0; i < obj.length; i++) {
-      name = this.randomName();
-      soldiers.push([name, obj[i]]);
+    for (i = 0; i < arrRanClass.length; i++) {
+      soldiers.push([arrRanClass[i].name, arrRanClass[i]]);
     }
 
     return soldiers;
@@ -143,4 +123,9 @@ var classs = new ClassBuilder(nameChar);
 // Used for the random array
 console.log(classs.arrayBuild());
 // Used for the random object with key value pairs
-console.log(classs.objBuild());
+//console.log(classs.randomClass());
+module.exports = {
+
+  Riflman: Rifleman
+
+};
